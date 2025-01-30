@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';  // Import useNavigate from react-router-dom
+import { useNavigate } from 'react-router-dom';
+import '../quizPageStyles.css'; // Import the updated CSS
 
 const QuizPage = () => {
     const [questions, setQuestions] = useState([]);
@@ -9,13 +10,13 @@ const QuizPage = () => {
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [score, setScore] = useState(0);
     const [quizCompleted, setQuizCompleted] = useState(false);
-    const navigate = useNavigate();  // Create navigate object
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchQuiz = async () => {
             try {
                 const { data } = await axios.get("http://localhost:5000/api/quiz");
-                setQuestions(data.questions);  // Assuming the response has a 'questions' array
+                setQuestions(data.questions);
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching quiz data", error);
@@ -30,10 +31,8 @@ const QuizPage = () => {
         updatedSelections[questionIndex] = option;
         setSelectedOptions(updatedSelections);
 
-        // Calculate score if the selected option is correct
         if (option.is_correct) {
-            const newScore = score + parseFloat(option.score || 1);
-            setScore(newScore);
+            setScore(score + 1);
         }
     };
 
@@ -50,78 +49,65 @@ const QuizPage = () => {
     };
 
     const handleGoHome = () => {
-        navigate('/');  // Corrected to use navigate() instead of push()
-    };
-
-    const renderSummary = () => {
-        return (
-            <div>
-                <h2>Quiz Completed</h2>
-                <p>Total Score: {score}</p>
-                <h3>Summary of Answers</h3>
-                <ul>
-                    {questions.map((question, index) => {
-                        const selectedOption = selectedOptions[index];
-                        const correctOption = question.options.find(option => option.is_correct);
-
-                        return (
-                            <li key={question.id}>
-                                <p>{question.description}</p>
-                                <p>Your Answer: {selectedOption ? selectedOption.description : "Not Answered"}</p>
-                                <p>Correct Answer: {correctOption ? correctOption.description : "No Correct Answer"}</p>
-                            </li>
-                        );
-                    })}
-                </ul>
-
-                {/* Button to go to home page */}
-                <button onClick={handleGoHome}>Go to Home</button>
-            </div>
-        );
+        navigate('/');
     };
 
     return (
-        <div>
+        <div className="quiz-container">
             <h1>{loading ? "Loading quiz..." : "Quiz: Genetics and Evolution"}</h1>
 
             {loading ? (
                 <p>Loading quiz...</p>
             ) : quizCompleted ? (
-                renderSummary()
+                <div className="quiz-summary">
+                    <h2>Quiz Completed</h2>
+                    <p>Total Score: {score}</p>
+                    <h3>Summary of Answers</h3>
+                    <ul>
+                        {questions.map((question, index) => {
+                            const selectedOption = selectedOptions[index];
+                            const correctOption = question.options.find(option => option.is_correct);
+
+                            return (
+                                <li key={question.id}>
+                                    <p><strong>Q:</strong> {question.description}</p>
+                                    <p><strong>Your Answer:</strong> {selectedOption ? selectedOption.description : "Not Answered"}</p>
+                                    <p><strong>Correct Answer:</strong> {correctOption ? correctOption.description : "No Correct Answer"}</p>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                    <button onClick={handleGoHome}>Go to Home</button>
+                </div>
             ) : (
                 <div>
-                    {/* Display the current question number */}
                     <h2>Question {currentQuestionIndex + 1} of {questions.length}</h2>
-
                     <h3>{questions[currentQuestionIndex]?.description}</h3>
 
-                    <form>
+                    <div className="quiz-options">
                         {questions[currentQuestionIndex]?.options?.map((option) => (
-                            <div key={option.id}>
+                            <label key={option.id}>
                                 <input
                                     type="radio"
-                                    id={`question-${currentQuestionIndex}-option-${option.id}`}
                                     name={`question-${currentQuestionIndex}`}
                                     value={option.id}
                                     checked={selectedOptions[currentQuestionIndex]?.id === option.id}
                                     onChange={() => handleOptionSelect(option, currentQuestionIndex)}
                                 />
-                                <label htmlFor={`question-${currentQuestionIndex}-option-${option.id}`}>
-                                    {option.description}
-                                </label>
-                            </div>
+                                {option.description}
+                            </label>
                         ))}
-                    </form>
+                    </div>
 
-                    <div>
+                    <div className="quiz-buttons">
                         {currentQuestionIndex > 0 && (
-                            <button onClick={handlePreviousQuestion}>Previous Question</button>
+                            <button onClick={handlePreviousQuestion}>Previous</button>
                         )}
 
                         {currentQuestionIndex < questions.length - 1 ? (
-                            <button onClick={handleNextQuestion}>Next Question</button>
+                            <button onClick={handleNextQuestion}>Next</button>
                         ) : (
-                            <button onClick={handleSubmitQuiz}>Submit Quiz</button>
+                            <button onClick={handleSubmitQuiz}>Submit</button>
                         )}
                     </div>
                 </div>
