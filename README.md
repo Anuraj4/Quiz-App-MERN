@@ -51,15 +51,9 @@ This is a simple and interactive quiz application built using HTML, CSS, and Jav
 ## Demo Video
 [Watch Demo](https://yourvideolink.com)
 
-## Future Enhancements
-- Add a database to store user scores.
-- Implement a timer for each question.
-- Provide difficulty levels.
-- User authentication for tracking individual progress.
-
 ## License
 This project is licensed under the MIT License. Feel free to modify and distribute it.
 
 ## Contact
-For any questions, feel free to reach out at [your email] or open an issue in the repository.
+For any questions, feel free to reach out at [anurajvenkatpurwar@gmail.com] or open an issue in the repository.
 
