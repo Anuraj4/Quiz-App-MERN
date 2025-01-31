@@ -15,7 +15,7 @@ const QuizPage = () => {
     useEffect(() => {
         const fetchQuiz = async () => {
             try {
-                const { data } = await axios.get("https://quiz-app-mern-backend.onrender.com");
+                const { data } = await axios.get("https://quiz-app-mern-h4rm.onrender.com");
                 setQuestions(data.questions);
                 setLoading(false);
             } catch (error) {
