@@ -42,11 +42,11 @@ This is a simple and interactive quiz application built using HTML, CSS, and Jav
 
 ## Screenshots
 ### Home Page
-![Home Page]((https://github.com/Anuraj4/Images/blob/main/home.png))
+![Home Page](https://github.com/Anuraj4/Images/blob/main/home.png)
 ### Quiz in Progress
-![Quiz]((https://github.com/Anuraj4/Images/blob/main/quiz.png))
+![Quiz](https://github.com/Anuraj4/Images/blob/main/quiz.png)
 ### Quiz Results
-![Results]((https://github.com/Anuraj4/Images/blob/main/summary.png))
+![Results](https://github.com/Anuraj4/Images/blob/main/summary.png)
 
 ## Demo Video
 [Watch Demo](https://yourvideolink.com)
